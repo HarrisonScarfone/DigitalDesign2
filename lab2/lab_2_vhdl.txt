@@ -1,0 +1,100 @@
+--lab 2 project
+-- harrison scarfone 104900846
+-- ----------------
+-- design and implement a two digit BCD seconds counter
+--specs:
+-- 		max val: 59
+--			parallel load enabled
+--			output to 2 7 seg displays
+
+library IEEE;
+
+use IEEE.std_logic_1164.all;
+use IEEE.std_logic_unsigned.all;
+
+entity lab_2 is 
+	port(
+		CLK, RESET, LOAD, CE: in std_logic;
+		BCDH, BCDL: in std_logic_vector(3 downto 0);
+		Seg7H, Seg7L: out std_logic_vector(6 downto 0)
+		);
+end entity;
+
+architecture behaviour of lab_2 is
+	signal countHigh, countLow: std_logic_vector(3 downto 0);
+	signal divided_clk: std_logic := '0';
+begin
+
+----clock divider process to be used during board applications
+--	clock_divider_board: process(CLK)	
+--	variable clk_count: integer := 0;
+--	
+--	begin
+--		if(CLK'event and CLK='1') then
+--			if clk_count = 250000000 then 
+--				divided_clk <= not divided_clk;
+--				clk_count := 0;
+--			else
+--				clk_count := clk_count + 1;
+--			end if;
+--		end if;
+--	end process;
+
+--clock divider to be used in the simluation
+	clock_divider_sim: process(CLK)
+	begin
+		divided_clk <= CLK;
+	end process;
+	
+--process that runs on trigger to count
+	on_trigger: process(divided_clk, RESET)
+	begin
+		if(RESET = '1') then
+			countHigh <= "0000";
+			countLow <= "0000";
+		elsif(divided_clk'event and divided_clk = '1' and LOAD = '1') then
+			countHigh <= BCDH;
+			countLow <= BCDL;
+		elsif(divided_clk'event and divided_clk = '1' and CE = '1') then
+			if(countLow = "1001") then
+				countLow <= "0000";
+				if(countHigh = "0101") then
+					countHigh <= "0000";
+				else
+					countHigh <= countHigh + 1;
+				end if;
+			else
+				countLow <= countLow + 1;
+			end if;
+		end if;
+	end process;
+	
+--select the numbers	
+	with countHigh select
+		Seg7H <= "0111111" when "0000",
+					"0000110" when "0001",
+					"1011011" when "0010",
+					"1001111" when "0011",
+					"1100110" when "0100",
+					"1101101" when "0101",
+					"1111001" when others;
+					
+	with countLow select
+		Seg7L <= "0111111" when "0000",
+					"0000110" when "0001",
+					"1011011" when "0010",
+					"1001111" when "0011",
+					"1100110" when "0100",
+					"1101101" when "0101",
+					"1111101" when "0110",
+					"0000111" when "0111",
+					"1111111" when "1000",
+					"1100111" when "1001",
+					"1111001" when others;
+					
+end architecture;
+		
+	
+			
+		
+		
