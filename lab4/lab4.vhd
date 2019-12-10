@@ -1,7 +1,5 @@
 --Lab 4 hardware description file
 --By: Harrison Scarfone
---		Samantha Bartos
---		Andy Chung
 
 library IEEE;
 
