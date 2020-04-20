@@ -18,7 +18,8 @@ and running for Labs 3 and 4.
 ## Recommendations
 
 Learn test benches.  Encapsulate all hardware functions you can by making seperate functions sensitive to trigger signals.
-This makes your codemore readable and easier to troubleshoot.  
+This makes your codemore readable and easier to troubleshoot.  Check out my Lab 4 for some cool ideas on that. Make use
+of VHDLs concurrent execution!
 
 Side Note: If you are a Windsor Engineer reading this, theres a 80% chance you dont format your code and write it in a block.
 Please dont do that :)
