@@ -2,6 +2,11 @@
 
 Hi Everyone, these are my projects for Digital Design 2. All labs received full marks.
 
+## Note
+
+Forgive the horrid formatting.  I also removed group member names from the files because in classic "group work" fashion,
+I wrote them completely (hardware and tb) and am somewhat proud of my first open ended hardware design projects. 
+
 ## Disclaimer
 
 I am not intending, by providing this, to facilitate cheating so please do not copy my solutions verbatim.
