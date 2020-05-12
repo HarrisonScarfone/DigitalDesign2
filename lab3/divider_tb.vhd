@@ -1,8 +1,6 @@
 --4-bit divider
 
 --By: Harrison Scarfone
-  --  Samantha Bartos
-  -- Andy Chung
 
 library ieee;
 
